@@ -1,0 +1,48 @@
+package com.lp.conference.conference_system.service;
+
+
+import com.lp.conference.conference_system.dto.SpeakerRequestDTO;
+import com.lp.conference.conference_system.dto.SpeakerResponseDTO;
+import com.lp.conference.conference_system.model.Speaker;
+import com.lp.conference.conference_system.repository.SpeakerRepository;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
+
+
+@Service
+public class SpeakerService {
+
+    private final SpeakerRepository speakerRepository;
+
+    public SpeakerService(SpeakerRepository speakerRepository) {
+        this.speakerRepository = speakerRepository;
+    }
+
+    public SpeakerResponseDTO createSpeaker(SpeakerRequestDTO dto) {
+        Speaker speaker = new Speaker(
+                null,
+                dto.getName(),
+                dto.getEmail(),
+                dto.getBio(),
+                dto.getSpecialization()
+        );
+
+        Speaker saved = speakerRepository.save(speaker);
+        return mapToResponseDTO(saved);
+    }
+
+    public Optional<SpeakerResponseDTO> getSpeakerById(Long id) {
+        return speakerRepository.findById(id)
+                .map(this::mapToResponseDTO);
+    }
+
+    private SpeakerResponseDTO mapToResponseDTO(Speaker speaker) {
+        return new SpeakerResponseDTO(
+                speaker.getId(),
+                speaker.getName(),
+                speaker.getEmail(),
+                speaker.getBio(),
+                speaker.getSpecialization()
+        );
+    }
+}
