@@ -1,19 +1,28 @@
 package com.lp.conference.conference_system.model;
 
-
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
-
+@Entity
+@Table(name = "schedules")
 public class Schedule {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate generatedAt;
-    private Long conferenceID;
     
-    public Schedule(Long id, LocalDate generatedAt, Long conferenceID) {
+    private LocalDate generatedAt;
+
+    @OneToOne
+    @JoinColumn(name = "conference_id")
+    private Conference conference;
+    
+    public Schedule() {}
+
+    public Schedule(Long id, LocalDate generatedAt, Conference conference) {
         this.id = id;
         this.generatedAt = generatedAt;
-        this.conferenceID = conferenceID;
+        this.conference = conference;
     }
 
     public Long getId() {
@@ -32,11 +41,12 @@ public class Schedule {
         this.generatedAt = generatedAt;
     }
 
-    public Long getConferenceID() {
-        return conferenceID;
+    public Conference getConference() {
+        return conference;
     }
 
-    public void setConferenceID(Long conferenceID) {
-        this.conferenceID = conferenceID;
+    public void setConference(Conference conference) {
+        this.conference = conference;
     }
+
 }

@@ -1,26 +1,39 @@
 package com.lp.conference.conference_system.model;
 
-
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Entity
+@Table(name = "registrations")
 public class Registration {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String status;
     private LocalDate registrationDate;
     private LocalTime registrationTime; 
-    private Long participantID;
-    private Long conferenceID;
+
+    @ManyToOne
+    @JoinColumn(name = "participant_id")
+    private Participant participant;
+
+    @ManyToOne
+    @JoinColumn(name = "conference_id")
+    private Conference conference;
     
+    public Registration() {}
+
     public Registration(Long id, String status, LocalDate registrationDate, LocalTime registrationTime,
-            Long participantID, Long conferenceID) {
+            Participant participant, Conference conference) {
         this.id = id;
         this.status = status;
         this.registrationDate = registrationDate;
         this.registrationTime = registrationTime;
-        this.participantID = participantID;
-        this.conferenceID = conferenceID;
+        this.participant = participant;
+        this.conference = conference;
     }
 
     public Long getId() {
@@ -55,19 +68,20 @@ public class Registration {
         this.registrationTime = registrationTime;
     }
 
-    public Long getParticipantID() {
-        return participantID;
+    public Participant getParticipant() {
+        return participant;
     }
 
-    public void setParticipantID(Long participantID) {
-        this.participantID = participantID;
+    public void setParticipant(Participant participant) {
+        this.participant = participant;
     }
 
-    public Long getConferenceID() {
-        return conferenceID;
+    public Conference getConference() {
+        return conference;
     }
 
-    public void setConferenceID(Long conferenceID) {
-        this.conferenceID = conferenceID;
+    public void setConference(Conference conference) {
+        this.conference = conference;
     }
+
 }

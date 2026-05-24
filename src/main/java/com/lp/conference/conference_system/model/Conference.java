@@ -1,18 +1,23 @@
 package com.lp.conference.conference_system.model;
 
-
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
-
+@Entity
+@Table(name = "conferences")
 public class Conference {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
     private Integer totalSeats;
 
-    
+    public Conference() {}
+
     public Conference(Long id, String name, LocalDate startDate, LocalDate endDate, Integer totalSeats) {
         this.id = id;
         this.name = name;
@@ -60,4 +65,6 @@ public class Conference {
     public void setTotalSeats(Integer totalSeats) {
         this.totalSeats = totalSeats;
     }
+
+    
 }

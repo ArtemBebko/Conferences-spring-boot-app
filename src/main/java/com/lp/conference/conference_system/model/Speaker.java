@@ -1,13 +1,21 @@
 package com.lp.conference.conference_system.model;
 
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "speakers")
 public class Speaker {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String name;
     private String email;
     private String bio;
     private String specialization;
+
+    public Speaker() {}
 
     public Speaker(Long id, String name, String email, String bio, String specialization) {
         this.id = id;
@@ -56,4 +64,5 @@ public class Speaker {
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
     }
+
 }

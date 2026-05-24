@@ -1,18 +1,14 @@
 package com.lp.conference.conference_system.controller;
 
-
 import com.lp.conference.conference_system.dto.ConferenceRequestDTO;
 import com.lp.conference.conference_system.dto.ConferenceResponseDTO;
 import com.lp.conference.conference_system.service.ConferenceService;
 import jakarta.validation.Valid;
-
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-
 
 @RestController
 @RequestMapping("/api/v1/conferences")
@@ -53,7 +49,9 @@ public class ConferenceController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ConferenceResponseDTO>> getAllConferences() {
-        return ResponseEntity.ok(conferenceService.getAllConferences());
+    public ResponseEntity<Page<ConferenceResponseDTO>> getAllConferences(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(conferenceService.getAllConferences(PageRequest.of(page, size)));
     }
 }

@@ -1,26 +1,37 @@
 package com.lp.conference.conference_system.model;
 
-
+import jakarta.persistence.*;
 import java.time.LocalTime;
 
-
+@Entity
+@Table(name = "sessions")
 public class Session {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String title;
     private LocalTime startTime;
     private LocalTime endTime;
-    private Long conferenceID;
-    private Long speakerID;
 
+    @ManyToOne
+    @JoinColumn(name = "conference_id")
+    private Conference conference;
 
-    public Session(Long id, String title, LocalTime startTime, LocalTime endTime, Long conferenceID, Long speakerID) {
+    @ManyToOne
+    @JoinColumn(name = "speaker_id")
+    private Speaker speaker;
+
+    public Session() {}
+
+    public Session(Long id, String title, LocalTime startTime, LocalTime endTime, Conference conference, Speaker speaker) {
         this.id = id;
         this.title = title;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.conferenceID = conferenceID;
-        this.speakerID = speakerID;
+        this.conference = conference;
+        this.speaker = speaker;
     }
 
     public Long getId() {
@@ -55,19 +66,19 @@ public class Session {
         this.endTime = endTime;
     }
 
-    public Long getConferenceID() {
-        return conferenceID;
+    public Conference getConference() {
+        return conference;
     }
 
-    public void setConferenceID(Long scheduleID) {
-        this.conferenceID = scheduleID;
+    public void setConference(Conference conference) {
+        this.conference = conference;
     }
 
-    public Long getSpeakerID() {
-        return speakerID;
+    public Speaker getSpeaker() {
+        return speaker;
     }
-    
-    public void setSpeakerID(Long speakerID) {
-        this.speakerID = speakerID;
+
+    public void setSpeaker(Speaker speaker) {
+        this.speaker = speaker;
     }
 }
