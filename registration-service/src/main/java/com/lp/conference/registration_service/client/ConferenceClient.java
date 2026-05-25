@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 
-@FeignClient(name = "conference-service", url = "http://localhost:8081/api/v1/conferences")
+@FeignClient(name = "conference-service", url = "${conference-service.url:http://localhost:8081/api/v1/conferences}")
 public interface ConferenceClient {
 
     @GetMapping("/{id}")

@@ -1,0 +1,2 @@
+CREATE DATABASE conference_catalog_db;
+CREATE DATABASE conference_registration_db;
